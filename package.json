@@ -1,0 +1,73 @@
+{
+  "$schema": "https://www.raycast.com/schemas/extension.json",
+  "name": "glf",
+  "title": "GLF - GitLab Fuzzy Finder",
+  "description": "Search your self-hosted GitLab projects with instant fuzzy search using GLF",
+  "icon": "icon.png",
+  "author": "igusev",
+  "license": "MIT",
+  "version": "1.0.0",
+  "commands": [
+    {
+      "name": "search-projects",
+      "title": "Search GitLab Projects",
+      "subtitle": "glf",
+      "description": "Search your GitLab projects with fuzzy matching",
+      "mode": "view",
+      "icon": "gitlab-logo.svg"
+    }
+  ],
+  "preferences": [
+    {
+      "name": "glfPath",
+      "type": "textfield",
+      "required": false,
+      "title": "GLF Binary Path",
+      "description": "Path to glf binary (auto-detected if left default)",
+      "default": "/opt/homebrew/bin/glf"
+    },
+    {
+      "name": "showScores",
+      "type": "checkbox",
+      "required": false,
+      "title": "Show Relevance Scores",
+      "description": "Display search relevance scores (for debugging)",
+      "default": false
+    },
+    {
+      "name": "maxResults",
+      "type": "textfield",
+      "required": false,
+      "title": "Maximum Results",
+      "description": "Limit number of search results (default: 20)",
+      "default": "20"
+    },
+    {
+      "name": "autoSyncInterval",
+      "type": "textfield",
+      "required": false,
+      "title": "Auto-Sync Interval (minutes)",
+      "description": "Automatically sync projects in background (0 to disable, default: 60)",
+      "default": "60"
+    }
+  ],
+  "dependencies": {
+    "@raycast/api": "^1.90.0"
+  },
+  "devDependencies": {
+    "@raycast/eslint-config": "^1.0.11",
+    "@types/node": "~20.17.6",
+    "@types/react": "^18.2.79",
+    "eslint": "^8.57.1",
+    "prettier": "^3.4.2",
+    "typescript": "^5.7.2"
+  },
+  "scripts": {
+    "build": "ray build -e dist",
+    "dev": "ray develop",
+    "fix-lint": "ray lint --fix",
+    "lint": "ray lint",
+    "prepublishOnly": "echo \"\\n\\nIt seems like you are trying to publish the Raycast extension to npm.\\n\\nIf you did intend to publish it to npm, remove the \\`prepublishOnly\\` script and rerun \\`npm publish\\` again.\\nIf you wanted to publish it to the Raycast Store instead, use \\`npm run publish\\` instead.\\n\\n\" && exit 1",
+    "publish": "npx @raycast/api@latest publish"
+  }
+}
