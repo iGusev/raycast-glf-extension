@@ -3,7 +3,7 @@
   "name": "glf",
   "title": "GLF - GitLab Fuzzy Finder",
   "description": "Search your self-hosted GitLab projects with instant fuzzy search using GLF",
-  "icon": "icon.png",
+  "icon": "gitlab-logo.svg",
   "author": "igusev",
   "license": "MIT",
   "version": "1.0.0",
