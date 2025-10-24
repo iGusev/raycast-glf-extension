@@ -2,7 +2,7 @@
 import React from "react";
 import { List, ActionPanel, Action, Icon, Color, getPreferenceValues, showToast, Toast, popToRoot } from "@raycast/api";
 import { useState, useEffect, useRef } from "react";
-import { searchGLF, syncGLF, formatScore, generateSquareAvatar } from "./utils";
+import { searchGLF, syncGLF, formatScore, generateSquareAvatar, recordSelection } from "./utils";
 import { GLFProject, GLFPreferences } from "./types";
 
 export default function SearchProjects() {
@@ -216,7 +216,11 @@ export default function SearchProjects() {
                   <Action.OpenInBrowser
                     title="Open in Browser"
                     url={project.url}
-                    onOpen={() => popToRoot()}
+                    onOpen={() => {
+                      // Record selection in history (async, non-blocking)
+                      recordSelection(project.path, searchText, preferences);
+                      popToRoot();
+                    }}
                   />
                   <Action.CopyToClipboard
                     title="Copy URL"

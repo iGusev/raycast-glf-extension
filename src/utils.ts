@@ -147,6 +147,33 @@ export async function syncGLF(preferences: GLFPreferences): Promise<void> {
   }
 }
 
+export async function recordSelection(
+  projectPath: string,
+  query: string,
+  preferences: GLFPreferences
+): Promise<void> {
+  const { glfPath: configuredPath } = preferences;
+
+  // Auto-detect glf path
+  const glfPath = await getGLFPath(configuredPath);
+
+  // Build command with query context if provided
+  const args = ["--json-record", projectPath];
+  if (query && query.trim() !== "") {
+    args.push("--query", query.trim());
+  }
+
+  const cmd = `${glfPath} ${args.join(" ")}`;
+
+  try {
+    await execAsync(cmd);
+    console.log(`Recorded selection: ${projectPath}${query ? ` (query: ${query})` : ""}`);
+  } catch (error) {
+    // Silent failure - don't disturb user if history recording fails
+    console.error("Failed to record selection:", error);
+  }
+}
+
 export function formatScore(score: number): string {
   return `Score: ${score.toFixed(1)}`;
 }
