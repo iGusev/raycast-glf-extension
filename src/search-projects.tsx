@@ -16,6 +16,12 @@ export default function SearchProjects() {
   const preferences = getPreferenceValues<GLFPreferences>();
   const abortControllerRef = useRef<AbortController | null>(null);
   const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const searchTextRef = useRef<string>(searchText);
+
+  // Keep searchTextRef in sync with searchText
+  useEffect(() => {
+    searchTextRef.current = searchText;
+  }, [searchText]);
 
   // Search with minimal debounce - always use glf
   useEffect(() => {
@@ -61,6 +67,10 @@ export default function SearchProjects() {
         console.log("Background sync started");
         await syncGLF(preferences);
         console.log("Background sync completed");
+
+        // Refresh search results after background sync to update the list
+        // Use searchTextRef to get the current search query
+        await performSearch(searchTextRef.current);
       } catch (err) {
         console.error("Background sync failed:", err);
         // Silent failure - don't disturb user with toast
@@ -226,11 +236,19 @@ export default function SearchProjects() {
                     title="Copy URL"
                     content={project.url}
                     shortcut={{ modifiers: ["cmd"], key: "c" }}
+                    onCopy={() => {
+                      // Record selection in history (async, non-blocking)
+                      recordSelection(project.path, searchText, preferences);
+                    }}
                   />
                   <Action.CopyToClipboard
                     title="Copy Path"
                     content={project.path}
                     shortcut={{ modifiers: ["cmd", "shift"], key: "c" }}
+                    onCopy={() => {
+                      // Record selection in history (async, non-blocking)
+                      recordSelection(project.path, searchText, preferences);
+                    }}
                   />
                   <Action
                     title="Sync Projects"
