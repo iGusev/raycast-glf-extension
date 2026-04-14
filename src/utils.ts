@@ -7,7 +7,11 @@ const execAsync = promisify(exec);
 // Auto-detect glf binary path if not explicitly set
 async function getGLFPath(configuredPath: string): Promise<string> {
   // If user configured a custom path, use it
-  if (configuredPath && configuredPath !== "/usr/local/bin/glf" && configuredPath !== "/opt/homebrew/bin/glf") {
+  if (
+    configuredPath &&
+    configuredPath !== "/usr/local/bin/glf" &&
+    configuredPath !== "/opt/homebrew/bin/glf"
+  ) {
     return configuredPath;
   }
 
@@ -24,9 +28,9 @@ async function getGLFPath(configuredPath: string): Promise<string> {
 
   // Try common paths in order
   const commonPaths = [
-    "/opt/homebrew/bin/glf",  // Apple Silicon
-    "/usr/local/bin/glf",      // Intel Mac
-    "/home/linuxbrew/.linuxbrew/bin/glf",  // Linux Homebrew
+    "/opt/homebrew/bin/glf", // Apple Silicon
+    "/usr/local/bin/glf", // Intel Mac
+    "/home/linuxbrew/.linuxbrew/bin/glf", // Linux Homebrew
   ];
 
   for (const path of commonPaths) {
@@ -52,10 +56,7 @@ export async function searchGLF(
   const glfPath = await getGLFPath(configuredPath);
 
   // Build glf command
-  const args = [
-    "--json",
-    `--limit ${maxResults}`,
-  ];
+  const args = ["--json", `--limit ${maxResults}`];
 
   if (showScores) {
     args.push("--scores");
@@ -89,8 +90,8 @@ export async function searchGLF(
       if (error.message.includes("ENOENT") || error.message.includes("command not found")) {
         throw new Error(
           `GLF binary not found at: ${glfPath}\n\n` +
-          "Please install GLF or update the binary path in preferences.\n" +
-          "Installation: brew install igusev/tap/glf"
+            "Please install GLF or update the binary path in preferences.\n" +
+            "Installation: brew install igusev/tap/glf"
         );
       }
       if (error.message.includes("no projects in cache")) {
@@ -99,9 +100,7 @@ export async function searchGLF(
         );
       }
       if (error.message.includes("config not found")) {
-        throw new Error(
-          "GLF not configured. Run 'glf --init' to configure GitLab connection."
-        );
+        throw new Error("GLF not configured. Run 'glf --init' to configure GitLab connection.");
       }
       throw new Error(`GLF execution failed: ${error.message}`);
     }
@@ -132,14 +131,12 @@ export async function syncGLF(preferences: GLFPreferences): Promise<void> {
       if (error.message.includes("ENOENT") || error.message.includes("command not found")) {
         throw new Error(
           `GLF binary not found at: ${glfPath}\n\n` +
-          "Please install GLF or update the binary path in preferences.\n" +
-          "Installation: brew install igusev/tap/glf"
+            "Please install GLF or update the binary path in preferences.\n" +
+            "Installation: brew install igusev/tap/glf"
         );
       }
       if (error.message.includes("config not found")) {
-        throw new Error(
-          "GLF not configured. Run 'glf --init' to configure GitLab connection."
-        );
+        throw new Error("GLF not configured. Run 'glf --init' to configure GitLab connection.");
       }
       throw new Error(`GLF sync failed: ${error.message}`);
     }
@@ -183,7 +180,7 @@ function hashString(str: string): number {
   let hash = 0;
   for (let i = 0; i < str.length; i++) {
     const char = str.charCodeAt(i);
-    hash = ((hash << 5) - hash) + char;
+    hash = (hash << 5) - hash + char;
     hash = hash & hash; // Convert to 32-bit integer
   }
   return Math.abs(hash);
@@ -232,7 +229,7 @@ function desaturateColor(hex: string): string {
   const lightenG = Math.min(255, Math.round(newG + (255 - newG) * 0.3));
   const lightenB = Math.min(255, Math.round(newB + (255 - newB) * 0.3));
 
-  return `#${((lightenR << 16) | (lightenG << 8) | lightenB).toString(16).padStart(6, '0')}`;
+  return `#${((lightenR << 16) | (lightenG << 8) | lightenB).toString(16).padStart(6, "0")}`;
 }
 
 // Generate a color based on project name
@@ -264,8 +261,8 @@ function getAvatarColor(name: string): string {
 function getProjectInitials(name: string): string {
   const words = name
     .trim()
-    .split(/[\s-_\/]+/) // Split by space, dash, underscore, or slash
-    .filter(word => word.length > 0);
+    .split(/[\s\-_/]+/)
+    .filter((word) => word.length > 0);
 
   if (words.length === 0) return "??";
   if (words.length === 1) return words[0].substring(0, 2).toUpperCase();
@@ -301,7 +298,7 @@ export function generateSquareAvatar(name: string, isHidden = false): string {
       font-size="18"
       font-weight="900"
       fill="none"
-      stroke="${textColor === '#FFFFFF' ? '#000000' : '#FFFFFF'}"
+      stroke="${textColor === "#FFFFFF" ? "#000000" : "#FFFFFF"}"
       stroke-width="0.5"
       text-anchor="middle"
       opacity="0.3"

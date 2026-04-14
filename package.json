@@ -3,7 +3,7 @@
   "name": "glf",
   "title": "GLF - GitLab Fuzzy Finder",
   "description": "Search your self-hosted GitLab projects with instant fuzzy search using GLF",
-  "icon": "gitlab-logo.svg",
+  "icon": "gitlab-logo.png",
   "author": "igusev",
   "license": "MIT",
   "version": "1.0.1",
@@ -14,7 +14,7 @@
       "subtitle": "glf",
       "description": "Search your GitLab projects with fuzzy matching",
       "mode": "view",
-      "icon": "gitlab-logo.svg"
+      "icon": "gitlab-logo.png"
     }
   ],
   "preferences": [
@@ -31,6 +31,7 @@
       "type": "checkbox",
       "required": false,
       "title": "Show Relevance Scores",
+      "label": "Show Scores",
       "description": "Display search relevance scores (for debugging)",
       "default": false
     },
@@ -57,7 +58,7 @@
   "devDependencies": {
     "@raycast/eslint-config": "^1.0.11",
     "@types/node": "~20.17.6",
-    "@types/react": "^18.2.79",
+    "@types/react": "^19.2.14",
     "eslint": "^8.57.1",
     "prettier": "^3.4.2",
     "typescript": "^5.7.2"

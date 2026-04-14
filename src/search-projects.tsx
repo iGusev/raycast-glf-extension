@@ -1,6 +1,15 @@
-// @ts-nocheck - React types v18.2 compatibility issue with Raycast
 import React from "react";
-import { List, ActionPanel, Action, Icon, Color, getPreferenceValues, showToast, Toast, popToRoot } from "@raycast/api";
+import {
+  List,
+  ActionPanel,
+  Action,
+  Icon,
+  Color,
+  getPreferenceValues,
+  showToast,
+  Toast,
+  popToRoot,
+} from "@raycast/api";
 import { useState, useEffect, useRef } from "react";
 import { searchGLF, syncGLF, formatScore, generateSquareAvatar, recordSelection } from "./utils";
 import { GLFProject, GLFPreferences } from "./types";
@@ -141,7 +150,7 @@ export default function SearchProjects() {
   // By default (showHidden=false), hide archived, excluded, and non-member projects
   const visibleProjects = showHidden
     ? projects
-    : projects.filter(project => !project.archived && !project.excluded && project.member);
+    : projects.filter((project) => !project.archived && !project.excluded && project.member);
 
   return (
     <List
@@ -152,11 +161,7 @@ export default function SearchProjects() {
       throttle
     >
       {error ? (
-        <List.EmptyView
-          icon={Icon.ExclamationMark}
-          title="Search Error"
-          description={error}
-        />
+        <List.EmptyView icon={Icon.ExclamationMark} title="Search Error" description={error} />
       ) : visibleProjects.length === 0 && !isLoading && !isInitialLoad ? (
         <List.EmptyView
           icon={Icon.MagnifyingGlass}
@@ -165,8 +170,8 @@ export default function SearchProjects() {
             searchText.trim() === ""
               ? "Start typing to search your GitLab projects"
               : showHidden
-              ? `No projects matching "${searchText}"`
-              : `No active projects matching "${searchText}"\n(Press Cmd+Shift+H to show hidden projects)`
+                ? `No projects matching "${searchText}"`
+                : `No active projects matching "${searchText}"\n(Press Cmd+Shift+H to show hidden projects)`
           }
         />
       ) : !isInitialLoad ? (
@@ -188,21 +193,21 @@ export default function SearchProjects() {
           if (project.archived) {
             accessories.push({
               icon: { source: Icon.Box, tintColor: Color.SecondaryText },
-              tooltip: "Archived project"
+              tooltip: "Archived project",
             });
           }
 
           if (project.excluded) {
             accessories.push({
               icon: { source: Icon.XMarkCircle, tintColor: Color.SecondaryText },
-              tooltip: "Excluded from search"
+              tooltip: "Excluded from search",
             });
           }
 
           if (!project.member) {
             accessories.push({
               icon: { source: Icon.Eye, tintColor: Color.SecondaryText },
-              tooltip: "Guest project (non-member)"
+              tooltip: "Guest project (non-member)",
             });
           }
 
@@ -210,7 +215,7 @@ export default function SearchProjects() {
           if (project.starred) {
             accessories.unshift({
               icon: { source: Icon.Heart, tintColor: "#FDB515" }, // California Gold heart
-              tooltip: "Starred project"
+              tooltip: "Starred project",
             });
           }
 

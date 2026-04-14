@@ -4,12 +4,12 @@ export interface GLFProject {
   description: string;
   url: string;
   starred: boolean;
-  excluded: boolean;        // Whether project is excluded via config
-  archived: boolean;        // Whether project is archived
-  member: boolean;          // Whether user is a member of this project
-  score?: number;           // Optional: only with --scores flag
-  history_score?: number;   // Optional: only with --scores flag
-  starred_bonus?: number;   // Optional: only with --scores flag
+  excluded: boolean; // Whether project is excluded via config
+  archived: boolean; // Whether project is archived
+  member: boolean; // Whether user is a member of this project
+  score?: number; // Optional: only with --scores flag
+  history_score?: number; // Optional: only with --scores flag
+  starred_bonus?: number; // Optional: only with --scores flag
 }
 
 export interface GLFSearchResult {
